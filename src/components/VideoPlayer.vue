@@ -6,6 +6,10 @@
     source: string
   }>();
 
+  const emit = defineEmits<{
+    (e: 'close'): void
+  }>();
+
   const ovenplayer = useTemplateRef('ovenplayer');
   const showOverlay = ref(false);
 
@@ -91,6 +95,8 @@
 }
 
 .close-button {
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
 }
 </style>

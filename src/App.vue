@@ -5,10 +5,14 @@
   import { ref } from 'vue';
 
   const streamSources = ref([]);
+
+  function closeStream(streamSource: string) {
+    streamSources.value = streamSources.value.filter(source => source !== streamSource);
+  }
 </script>
 
 <template>
-  <VideoPlayer v-for="streamSource in streamSources" :key="streamSource" :source="streamSource" />
+  <VideoPlayer v-for="streamSource in streamSources" :key="streamSource" :source="streamSource" @close="() => closeStream(streamSource)" />
 
   <StreamSelector v-model="streamSources" />
 </template>
