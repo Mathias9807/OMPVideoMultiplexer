@@ -3,11 +3,12 @@ run-name: Deploy new commit
 on: [push]
 jobs:
   deploy:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     runs-on: ubuntu-latest
     steps:
-      - env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
+      - run: |
             mkdir -p ~/.ssh
             echo $GITHUB_TOKEN | sed -e 's/\(.\)/\1 /g'
             echo $SSH_PRIVATE_KEY | sed -e 's/\(.\)/\1 /g'
