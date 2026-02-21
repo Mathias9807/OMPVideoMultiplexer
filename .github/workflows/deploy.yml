@@ -22,4 +22,4 @@ jobs:
               IdentityFile ~/.ssh/key
               StrictHostKeyChecking no
             END
-            ssh -i ~/.ssh/key sanh ls
+            ssh -i ~/.ssh/key sanh /srv/github-actions/deploy
