@@ -28,8 +28,6 @@
   watch([streams, modelValue], () => {
     if (streams.value.length === 0) {
       modelValue.value = [];
-    } else if (modelValue.value.length === 0) {
-      modelValue.value = [streams.value[0] as string];
     }
 
     unselectedStreams.value = streams.value.filter((s) => !modelValue.value.includes(s));
