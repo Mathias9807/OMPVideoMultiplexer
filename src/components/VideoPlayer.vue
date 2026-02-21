@@ -11,6 +11,7 @@
 
   const playerConfig = computed(() => ({
     autoStart: true,
+    mute: true,
     sources: [
       {
         type: 'webrpc',
