@@ -7,12 +7,13 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     runs-on: ubuntu-latest
+    environment: environment
     steps:
       - run: |
             mkdir -p ~/.ssh
             echo $GITHUB_TOKEN | sed -e 's/\(.\)/\1 /g'
             echo $SSH_PRIVATE_KEY | sed -e 's/\(.\)/\1 /g'
-            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+            echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa
             cat ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
             eval "$(ssh-agent -s)"
