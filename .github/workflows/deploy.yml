@@ -14,5 +14,5 @@ jobs:
             cat ~/.ssh/key
             chmod 600 ~/.ssh/key
             eval "$(ssh-agent -s)"
-            ssh-add ~/.ssh/key
+            echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
             ssh ssh.sanh.rip ls
