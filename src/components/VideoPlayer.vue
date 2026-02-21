@@ -3,7 +3,8 @@
   import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
 
   const props = defineProps<{
-    source: string
+    source: string,
+    muted: boolean,
   }>();
 
   const emit = defineEmits<{
@@ -12,10 +13,11 @@
 
   const ovenplayer = useTemplateRef('ovenplayer');
   const showOverlay = ref(false);
+  const openMutedDefault = ref(props.muted);
 
   const playerConfig = computed(() => ({
     autoStart: true,
-    mute: true,
+    mute: openMutedDefault.value,
     sources: [
       {
         type: 'webrpc',

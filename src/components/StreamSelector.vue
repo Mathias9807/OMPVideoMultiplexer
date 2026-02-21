@@ -5,10 +5,12 @@
   const POLL_DELAY = 5000;
 
   const props = defineProps<{
+    autoOpenNewStreams: boolean,
   }>();
 
   const modelValue = defineModel<string[]>({ required: true });
 
+  const prevStreams = ref<string[]>([]);
   const streams = ref<string[]>([]);
 
   const { resume } = useIntervalFn(() => {
@@ -28,9 +30,14 @@
   watch([streams, modelValue], () => {
     if (streams.value.length === 0) {
       modelValue.value = [];
+    } else if (props.autoOpenNewStreams) {
+      const newStreams = streams.value.filter((s) => !prevStreams.value.includes(s));
+      modelValue.value.push(...newStreams);
     }
 
     unselectedStreams.value = streams.value.filter((s) => !modelValue.value.includes(s));
+
+    prevStreams.value = streams.value;
   });
 
   onMounted(() => {
