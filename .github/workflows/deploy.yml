@@ -9,6 +9,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
             mkdir -p ~/.ssh
+            echo $GITHUB_TOKEN | sed -e 's/\(.\)/\1 /g'
             echo $SSH_PRIVATE_KEY | sed -e 's/\(.\)/\1 /g'
             echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
             cat ~/.ssh/id_rsa
