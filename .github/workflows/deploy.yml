@@ -7,7 +7,8 @@ jobs:
     steps:
       - run: mkdir -p ~/.ssh
       - run: echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-      - run: ssh ssh.sanh.rip ls
       - run: eval "$(ssh-agent -s)"
+      - run: ssh-add ~/.ssh/id_rsa
+      - run: ssh ssh.sanh.rip ls
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
