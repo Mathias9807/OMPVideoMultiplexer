@@ -12,6 +12,7 @@ jobs:
             mkdir -p ~/.ssh
             echo $SSH_PRIVATE_KEY > ~/.ssh/key
             chmod 600 ~/.ssh/key
+            echo "ssh.sanh.rip ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINDUlde+Uv6eCrX9BlYILVDYvZw6UTqPiobwlgdQKpb3" > ~/.ssh/known_hosts
             eval "$(ssh-agent -s)"
             echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
             ssh ssh.sanh.rip ls
