@@ -82,11 +82,14 @@
   background: radial-gradient(ellipse at bottom left, rgba(0,0,0,0) 71%, rgba(0,0,0,1) 100%);
   color: white;
   font-size: 1.2rem;
-  display: none;
+
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .overlay--visible {
   display: flex;
+  opacity: 1;
 }
 
 .label {
