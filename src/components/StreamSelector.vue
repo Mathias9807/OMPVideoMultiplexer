@@ -56,6 +56,23 @@
       modelValue.value.push(stream);
     }
   }
+
+  watch(() => [streams.value, modelValue.value], () => {
+    if (streams.value.length == 0 && modelValue.value.length == 0) {
+      // Animate the "no streams" message
+      requestAnimationFrame(animateNoStrems);
+    }
+  });
+  function animateNoStrems(t: number) {
+    const spans = document.querySelectorAll('#no-strems-msg span');
+    spans.forEach((span, i) => {
+      const y = Math.cos((t / 500) - i * 0.8) * 12 * (0.5 - Math.abs(i - spans.length / 2) / spans.length);
+      (span as HTMLElement).style.transform = `translateY(${y}px)`;
+    });
+
+    if (streams.value.length == 0 && modelValue.value.length == 0)
+      requestAnimationFrame(animateNoStrems);
+  }
 </script>
 
 <template>
@@ -63,8 +80,8 @@
     <span>Currently-available-to-watch-but-not-in-a-state-of-currently-being-watched streams:</span>
     <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
   </div>
-  <div v-else class="no-strems">
-    <div style="font-family: sans-serif">( ~－ω－~)ｚｚｚ～</div>
+  <div v-if="streams.length == 0 && modelValue.length == 0" class="no-strems">
+    <div id="no-strems-msg" style="font-family: sans-serif"><span>(</span><span> </span><span>~</span><span>－</span><span>ω</span><span>－</span><span>~</span><span>)</span><span>ｚ</span><span>ｚ</span><span>ｚ</span><span>～</span></div>
     <div>no streams</div>
   </div>
 </template>
@@ -108,5 +125,9 @@
 .no-strems div {
   margin: auto;
   padding: 0.5rem;
+}
+
+.no-strems #no-strems-msg span {
+  display: inline-block;
 }
 </style>
