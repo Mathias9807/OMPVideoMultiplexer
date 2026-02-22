@@ -66,7 +66,7 @@
   function animateNoStrems(t: number) {
     const spans = document.querySelectorAll('#no-strems-msg span');
     spans.forEach((span, i) => {
-      const y = Math.cos((t / 500) - i * 0.8) * 12 * (0.5 - Math.abs(i - spans.length / 2) / spans.length);
+      const y = Math.cos((t / 800) - i * 0.8) * 15 * (0.3 + i * 0.3);
       (span as HTMLElement).style.transform = `translateY(${y}px)`;
     });
 
@@ -81,7 +81,7 @@
     <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
   </div>
   <div v-if="streams.length == 0 && modelValue.length == 0" class="no-strems">
-    <div id="no-strems-msg" style="font-family: sans-serif"><span>(</span><span> </span><span>~</span><span>－</span><span>ω</span><span>－</span><span>~</span><span>)</span><span>ｚ</span><span>ｚ</span><span>ｚ</span><span>～</span></div>
+    <div id="no-strems-msg" style="font-family: sans-serif"><span>( ~－ω－~)</span><span>ｚ</span><span>ｚ</span><span>ｚ</span><span>～</span></div>
     <div>no streams</div>
   </div>
 </template>
