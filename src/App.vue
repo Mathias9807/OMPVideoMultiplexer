@@ -4,13 +4,12 @@
   import Checkbox from './components/Checkbox.vue';
 
   import { ref, watch } from 'vue';
+  import { useConfigStore } from './stores/config';
+  const config = useConfigStore();
 
   const streamSources = ref([]);
-  const autoOpenNewStreams = ref(false);
-  const openMuted = ref(true);
-  const background = ref('architect');
 
-  watch(background, (newBackground) => {
+  watch(() => config.background, (newBackground) => {
     document.body.className = newBackground;
   }, { immediate: true });
 
@@ -21,9 +20,9 @@
 
 <template>
   <div class="top-controls">
-    <Checkbox v-model="autoOpenNewStreams" label="Auto Open New Streams" />
-    <Checkbox v-model="openMuted" label="Open Muted" />
-    <select v-model="background">
+    <Checkbox v-model="config.autoplay" label="Auto Open New Streams" />
+    <Checkbox v-model="config.openMuted" label="Open Muted" />
+    <select v-model="config.background">
       <option value="babushka">Babushka</option>
       <option value="architect">Architect</option>
     </select>
@@ -34,11 +33,11 @@
       v-for="streamSource in streamSources"
       :key="streamSource"
       :source="streamSource"
-      :muted="openMuted"
+      :muted="config.openMuted"
       @close="() => closeStream(streamSource)" />
 
     <StreamSelector
-      :autoOpenNewStreams="autoOpenNewStreams"
+      :autoOpenNewStreams="config.autoplay"
       v-model="streamSources" />
   </div>
 </template>
