@@ -16,7 +16,7 @@ export default defineConfig({
     allowedHosts: ['ameno.local'],
   },
   build: {
-    sourcemap: true,
+    sourcemap: 'inline',
   },
   resolve: {
     alias: {
