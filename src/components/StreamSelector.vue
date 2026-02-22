@@ -62,7 +62,7 @@
       // Animate the "no streams" message
       requestAnimationFrame(animateNoStrems);
     }
-  });
+  }, { immediate: true });
   function animateNoStrems(t: number) {
     const spans = document.querySelectorAll('#no-strems-msg span');
     spans.forEach((span, i) => {
