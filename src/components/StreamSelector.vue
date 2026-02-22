@@ -46,6 +46,10 @@
     prevStreams.value = streams.value;
   }
 
+  watch(modelValue, () => {
+    unselectedStreams.value = streams.value.filter((s) => !modelValue.value.includes(s));
+  });
+
   onMounted(() => {
     resume();
   });
