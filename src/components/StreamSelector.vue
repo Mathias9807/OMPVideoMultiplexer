@@ -57,7 +57,7 @@
 
 <template>
   <div v-if="unselectedStreams.length > 0" class="container">
-    <span>Other streams:</span>
+    <span>Currently-available-to-watch-but-not-in-a-state-of-currently-being-watched streams:</span>
     <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="modelValue.push(stream)" />
   </div>
 </template>
