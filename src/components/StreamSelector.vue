@@ -63,6 +63,10 @@
     <span>Currently-available-to-watch-but-not-in-a-state-of-currently-being-watched streams:</span>
     <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
   </div>
+  <div v-else class="no-strems">
+    <div style="font-family: sans-serif">( ~－ω－~)ｚｚｚ～</div>
+    <div>no streams</div>
+  </div>
 </template>
 
 <style scoped>
@@ -86,5 +90,23 @@
   color: #000;
   border: none;
   border-radius: 5px;
+}
+
+.no-strems {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: #2d253e;
+  color: rgb(160, 125, 173);
+  border-radius: 18px;
+
+  font-size: 2rem;
+}
+
+.no-strems div {
+  margin: auto;
+  padding: 0.5rem;
 }
 </style>
