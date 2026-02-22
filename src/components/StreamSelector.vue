@@ -26,12 +26,12 @@
   const unselectedStreams = ref([] as string[]);
 
   function streamsUpdated() {
-    // Filter out streams that have been removed
-    for (const selStream of modelValue.value) {
-      if (!streams.value.includes(selStream)) {
-        modelValue.value = modelValue.value.filter((s) => s !== selStream);
-      }
-    }
+    // // Filter out streams that have been removed
+    // for (const selStream of modelValue.value) {
+    //   if (!streams.value.includes(selStream)) {
+    //     modelValue.value = modelValue.value.filter((s) => s !== selStream);
+    //   }
+    // }
 
     // Add new streams if autoOpenNewStreams is enabled
     if (props.autoOpenNewStreams) {

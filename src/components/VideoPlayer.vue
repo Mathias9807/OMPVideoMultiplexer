@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import OvenPlayerVue3 from 'ovenplayer-vue3';
   import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
+  import failureImg from '@/assets/stream-broke.jpg';
 
   const props = defineProps<{
     source: string,
@@ -13,6 +14,7 @@
 
   const ovenplayer = useTemplateRef('ovenplayer');
   const showOverlay = ref(false);
+  const showFailureOverlay = ref(false);
   const openMutedDefault = ref(props.muted);
 
   const playerConfig = computed(() => ({
@@ -34,15 +36,35 @@
 
   function errorHandler(event: any) {
     console.error('Player error', event);
+    showFailureOverlay.value = true;
+
+    // Remove the stream after 5s
+    setTimeout(() => {
+      emit('close');
+    }, 5000);
+  }
+
+  function stateChangedHandler(event: any) {
+    console.log('Player state changed', event);
+    if (event.newstate == 'playing') {
+      showFailureOverlay.value = false;
+    }
   }
 </script>
 
 <template>
   <div class="container" @mouseover="showOverlay = true" @mouseleave="showOverlay = false">
     <OvenPlayerVue3
+      class="player"
       ref="ovenplayer"
       :config="playerConfig"
-      @error="errorHandler" />
+      @error="errorHandler"
+      @state-changed="stateChangedHandler" />
+
+    <div class="failure-overlay" v-if="showFailureOverlay">
+      <span>Stream disconnected</span>
+      <div class="failure-img" :style="{ backgroundImage: `url(${failureImg})` }" alt="Stream disconnected" />
+    </div>
 
     <div :class="['overlay', { 'overlay--visible': showOverlay }]">
       <div class="close-button" @click="$emit('close')">
@@ -67,6 +89,12 @@
   overflow: hidden;
 }
 
+.player {
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -82,6 +110,7 @@
   background: radial-gradient(ellipse at bottom left, rgba(0,0,0,0) 71%, rgba(0,0,0,1) 100%);
   color: white;
   font-size: 1.2rem;
+  z-index: 5;
 
   opacity: 0;
   transition: opacity 0.3s;
@@ -104,4 +133,35 @@
   height: 2rem;
   cursor: pointer;
 }
+
+.failure-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.failure-img {
+  width: 100%;
+  height: 100%;
+
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.failure-overlay span {
+  color: white;
+  font-size: 2.5rem;
+}
+
 </style>
