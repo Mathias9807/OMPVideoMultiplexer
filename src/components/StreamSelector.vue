@@ -22,23 +22,29 @@
     }).then((res) => res.json())
     .then((data) => {
       streams.value = data.response as string[];
+      streamsUpdated();
     });
   }, POLL_DELAY, { immediateCallback: true });
 
   const unselectedStreams = ref([] as string[]);
 
-  watch([streams, modelValue], () => {
-    if (streams.value.length === 0) {
-      modelValue.value = [];
-    } else if (props.autoOpenNewStreams) {
+  function streamsUpdated() {
+    // Filter out streams that have been removed
+    for (const selStream of modelValue.value) {
+      if (!streams.value.includes(selStream)) {
+        modelValue.value = modelValue.value.filter((s) => s !== selStream);
+      }
+    }
+
+    // Add new streams if autoOpenNewStreams is enabled
+    if (props.autoOpenNewStreams) {
       const newStreams = streams.value.filter((s) => !prevStreams.value.includes(s));
       modelValue.value.push(...newStreams);
     }
 
     unselectedStreams.value = streams.value.filter((s) => !modelValue.value.includes(s));
-
     prevStreams.value = streams.value;
-  });
+  }
 
   onMounted(() => {
     resume();
