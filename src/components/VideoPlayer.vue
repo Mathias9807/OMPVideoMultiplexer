@@ -53,7 +53,7 @@
 </script>
 
 <template>
-  <div class="container" @mouseover="showOverlay = true" @mouseleave="showOverlay = false">
+  <div :class="['container', { 'closing': showFailureOverlay }]" @mouseover="showOverlay = true" @mouseleave="showOverlay = false">
     <OvenPlayerVue3
       class="player"
       ref="ovenplayer"
@@ -89,10 +89,26 @@
   overflow: hidden;
 }
 
+.container.closing {
+  animation: fadeOut 5s forwards;
+}
+
 .player {
   width: 100%;
   height: auto;
   margin: auto;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .overlay {
