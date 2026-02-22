@@ -50,12 +50,18 @@
   onMounted(() => {
     resume();
   });
+
+  function addStream(stream: string) {
+    if (!modelValue.value.includes(stream)) {
+      modelValue.value.push(stream);
+    }
+  }
 </script>
 
 <template>
   <div v-if="unselectedStreams.length > 0" class="container">
     <span>Currently-available-to-watch-but-not-in-a-state-of-currently-being-watched streams:</span>
-    <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="modelValue.push(stream)" />
+    <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
   </div>
 </template>
 
