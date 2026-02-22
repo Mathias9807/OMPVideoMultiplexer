@@ -82,7 +82,7 @@
   min-width: 20vw;
   height: auto;
 
-  margin-top: 2rem;
+  margin-top: -0.5rem;
   margin-bottom: 2rem;
 
   border-radius: 8px;
