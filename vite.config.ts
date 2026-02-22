@@ -16,7 +16,12 @@ export default defineConfig({
     allowedHosts: ['ameno.local'],
   },
   build: {
-    sourcemap: 'inline',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        sourcemap: true,
+      },
+    },
   },
   resolve: {
     alias: {
