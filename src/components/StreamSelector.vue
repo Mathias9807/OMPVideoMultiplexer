@@ -14,10 +14,7 @@
   const streams = ref<string[]>([]);
 
   const { resume } = useIntervalFn(() => {
-    fetch('https://stream.kirr.nu/v1/vhosts/default/apps/app/streams', {
-      headers: {
-        Authorization: 'Basic ' + btoa('api:IIM9CFlQfdvRBfw'),
-      },
+    fetch('https://stream.kirr.nu/streams', {
       signal: AbortSignal.timeout(POLL_DELAY),
     }).then((res) => res.json())
     .then((data) => {
