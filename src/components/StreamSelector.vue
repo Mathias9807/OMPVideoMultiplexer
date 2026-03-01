@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { useIntervalFn } from '@vueuse/core';
   import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+  import PrivateStreamInput from './PrivateStreamInput.vue';
 
   const POLL_DELAY = 5000;
 
@@ -73,22 +74,33 @@
     if (streams.value.length == 0 && modelValue.value.length == 0)
       requestAnimationFrame(animateNoStrems);
   }
+
+  const showActiveStreams = computed(() => unselectedStreams.value.length > 0);
+  const showNoStrems = computed(() =>
+    streams.value.length == 0 && modelValue.value.length == 0
+  );
 </script>
 
 <template>
-  <div v-if="unselectedStreams.length > 0" class="container">
-    <span>Currently-available-to-watch-but-not-in-a-state-of-currently-being-watched streams:</span>
-    <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
-  </div>
-  <div v-if="streams.length == 0 && modelValue.length == 0" class="no-strems">
-    <div id="no-strems-msg" style="font-family: sans-serif"><span>( ~－ω－~)</span><span>ｚ</span><span>ｚ</span><span>ｚ</span><span>～</span></div>
-    <div>no streams</div>
+  <div :class="{'container': true, 'no-strems': showNoStrems}">
+    <div v-if="showActiveStreams">
+      <span>Active streams:</span>
+      <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
+    </div>
+
+    <template v-if="showNoStrems">
+      <div id="no-strems-msg" style="font-family: sans-serif"><span>( ~－ω－~)</span><span>ｚ</span><span>ｚ</span><span>ｚ</span><span>～</span></div>
+      <div>no streams</div>
+    </template>
+
+    <PrivateStreamInput @add="addStream('priv:' + $event)" />
   </div>
 </template>
 
 <style scoped>
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 1rem;

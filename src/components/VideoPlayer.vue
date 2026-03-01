@@ -17,16 +17,25 @@
   const showFailureOverlay = ref(false);
   const openMutedDefault = ref(props.muted);
 
-  const playerConfig = computed(() => ({
-    autoStart: true,
-    mute: openMutedDefault.value,
-    sources: [
-      {
-        type: 'webrpc',
-        file: `wss://stream.kirr.nu/app/${props.source}`,
-      },
-    ],
-  }));
+  const title = computed(() => {
+    const parts = props.source.split(':');
+    return parts.length == 2 ? parts[1] : props.source;
+  });
+
+  const playerConfig = computed(() => {
+    const parts = props.source.split(':');
+    const pre = parts.length == 2 ? parts[0] : 'app';
+    return {
+      autoStart: true,
+      mute: openMutedDefault.value,
+      sources: [
+        {
+          type: 'webrpc',
+          file: `wss://stream.kirr.nu/${pre}/${parts[parts.length - 1]}?transport=tcp`,
+        },
+      ],
+    };
+  });
 
   watch(() => props.source, (newSource) => {
     console.log('ovenplayer', ovenplayer.value);
@@ -71,7 +80,7 @@
         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" id="mdi-close" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
       </div>
     </div>
-    <span class="label">{{ props.source }}</span>
+    <span class="label">{{ title }}</span>
   </div>
 </template>
 
