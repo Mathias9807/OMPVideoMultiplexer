@@ -20,6 +20,7 @@
 
 <template>
   <div class="top-controls">
+    <Checkbox v-model="config.tcpTransport" label="TCP Transport" />
     <Checkbox v-model="config.autoplay" label="Auto Open New Streams" />
     <Checkbox v-model="config.openMuted" label="Open Muted" />
     <select v-model="config.background">
@@ -34,6 +35,7 @@
       :key="streamSource"
       :source="streamSource"
       :muted="config.openMuted"
+      :transport="config.tcpTransport ? 'tcp' : ''"
       @close="() => closeStream(streamSource)" />
 
     <StreamSelector

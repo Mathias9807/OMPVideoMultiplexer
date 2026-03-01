@@ -1,8 +1,12 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
 
   import { useConfigStore } from '../stores/config';
   const config = useConfigStore();
+
+  const props = defineProps<{
+    ignoreStreams: string[],
+  }>();
 
   const emits = defineEmits<{
     (e: 'add', streamTag: string): void,
@@ -10,6 +14,10 @@
   
   const streamTag = ref('');
   
+  const addedStreams = computed(() => {
+    return config.privateStreams.filter(s => !props.ignoreStreams.includes(s));
+  })
+
   function addPrivateStream() {
     if (streamTag.value.trim() !== '') {
       config.privateStreams.push(streamTag.value.trim());
@@ -32,7 +40,7 @@
 
   <div class="prev-private-streams">
     <div
-      v-for="stream in config.privateStreams"
+      v-for="stream in addedStreams"
       :key="stream"
       class="unselected-streams"
       @click="$emit('add', stream)"

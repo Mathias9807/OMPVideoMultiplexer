@@ -6,6 +6,7 @@ export const useConfigStore = defineStore('config', {
     openMuted: true,
     background: 'architect',
     privateStreams: [] as string[],
+    tcpTransport: false,
   }),
   persist: true,
 })

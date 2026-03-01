@@ -93,7 +93,9 @@
       <div>no streams</div>
     </template>
 
-    <PrivateStreamInput @add="addStream('priv:' + $event)" />
+    <PrivateStreamInput
+      :ignore-streams="modelValue.map(s => s.replace('priv:', ''))"
+      @add="addStream('priv:' + $event)" />
   </div>
 </template>
 

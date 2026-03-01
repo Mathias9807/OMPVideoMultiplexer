@@ -6,6 +6,7 @@
   const props = defineProps<{
     source: string,
     muted: boolean,
+    transport: string,
   }>();
 
   const emit = defineEmits<{
@@ -25,13 +26,15 @@
   const playerConfig = computed(() => {
     const parts = props.source.split(':');
     const pre = parts.length == 2 ? parts[0] : 'app';
+
+    const transport = props.transport.length ? '?transport=' + props.transport : '';
     return {
       autoStart: true,
       mute: openMutedDefault.value,
       sources: [
         {
           type: 'webrpc',
-          file: `wss://stream.kirr.nu/${pre}/${parts[parts.length - 1]}?transport=tcp`,
+          file: `wss://stream.kirr.nu/${pre}/${parts[parts.length - 1]}${transport}`,
         },
       ],
     };
