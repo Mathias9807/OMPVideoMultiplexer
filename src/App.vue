@@ -19,10 +19,10 @@
 
   const izuna = ref<boolean>(false);
   window.addEventListener('keypress', (ev) => {
-    let nKeys: string = window.lastNKeys || '';
+    let nKeys: string = (window as any).lastNKeys || '';
     nKeys += ev.key;
-    window.lastNKeys = nKeys.substring(nKeys.length - 5);
-    if (window.lastNKeys.endsWith('izuna')) izuna.value = true;
+    (window as any).lastNKeys = nKeys.substring(nKeys.length - 5);
+    if ((window as any).lastNKeys.endsWith('izuna')) izuna.value = true;
   });
 </script>
 
