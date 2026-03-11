@@ -16,6 +16,14 @@
   function closeStream(streamSource: string) {
     streamSources.value = streamSources.value.filter(source => source !== streamSource);
   }
+
+  const izuna = ref<boolean>(false);
+  window.addEventListener('keypress', (ev) => {
+    let nKeys: string = window.lastNKeys || '';
+    nKeys += ev.key;
+    window.lastNKeys = nKeys.substring(nKeys.length - 5);
+    if (window.lastNKeys.endsWith('izuna')) izuna.value = true;
+  });
 </script>
 
 <template>
@@ -41,6 +49,8 @@
     <StreamSelector
       :autoOpenNewStreams="config.autoplay"
       v-model="streamSources" />
+
+    <iframe v-if="izuna" src="https://izuna.ninja/" style="width: 500px; height: 500px" ></iframe>
   </div>
 </template>
 
