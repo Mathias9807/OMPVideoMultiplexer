@@ -64,6 +64,7 @@
   #app {
     width: 100vw;
     height: 100vh;
+    padding: 2px;
     display: flex;
     flex-direction: column;
   }
