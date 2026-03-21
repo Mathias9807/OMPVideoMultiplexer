@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useConfigStore = defineStore('config', {
   state: () => ({
-    autoplay: false,
+    autoplay: true,
     openMuted: true,
     background: 'architect',
     privateStreams: [] as string[],
