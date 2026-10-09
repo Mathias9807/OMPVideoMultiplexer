@@ -83,7 +83,7 @@
 
 <template>
   <div :class="{'container': true, 'no-strems': showNoStrems}">
-    <div v-if="showActiveStreams">
+    <div v-if="showActiveStreams" class="active-streams-container">
       <span>Active streams:</span>
       <input v-for="stream in unselectedStreams" :key="stream" class="unselected-streams" type="button" :value="stream" @click="addStream(stream)" />
     </div>
@@ -92,6 +92,8 @@
       <div id="no-strems-msg" style="font-family: sans-serif"><span>( ~－ω－~)</span><span>ｚ</span><span>ｚ</span><span>ｚ</span><span>～</span></div>
       <div>no streams</div>
     </template>
+
+    <div v-if="showActiveStreams || showNoStrems" class="divisor"></div>
 
     <PrivateStreamInput
       :ignore-streams="modelValue.map(s => s.replace('priv:', ''))"
@@ -121,6 +123,17 @@
   color: #000;
   border: none;
   border-radius: 5px;
+}
+
+.container .divisor {
+  width: 100%;
+  height: 0;
+  margin: 0 1rem 0.5rem 1rem;
+  padding: 0;
+  border: 0;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: rgb(160, 125, 173);
 }
 
 .no-strems {
