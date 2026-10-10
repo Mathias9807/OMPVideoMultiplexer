@@ -110,9 +110,9 @@
   margin: 1rem;
   background: #2d253e;
   color: white;
-  border-radius: 18px;
+  border-radius: 6px;
 
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .container .unselected-streams {

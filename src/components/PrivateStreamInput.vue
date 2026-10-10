@@ -83,14 +83,16 @@
     color: #2d253e;
     appearance: none;
 
+    border-color: rgb(160, 125, 173);
     border-radius: 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-left-width: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-radius: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-width: 0;
     font-weight: bold;
   }
+
+  button:active:focus{ background-color: rgb(160, 125, 173, 70%); }
 
   .prev-private-streams {
     max-width: 20rem;

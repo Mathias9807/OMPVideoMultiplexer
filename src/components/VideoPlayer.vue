@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import OvenPlayerVue3 from 'ovenplayer-vue3';
   import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
-  import failureImg from '@/assets/stream-broke.jpg';
+  // import failureImg from '@/assets/stream-broke.jpg';
 
   const props = defineProps<{
     source: string,
@@ -75,7 +75,8 @@
 
     <div class="failure-overlay" v-if="showFailureOverlay">
       <span>Stream disconnected</span>
-      <div class="failure-img" :style="{ backgroundImage: `url(${failureImg})` }" alt="Stream disconnected" />
+      <!-- <div class="failure-img" :style="{ backgroundImage: `url(${failureImg})` }" alt="Stream
+        disconnected" /> -->
     </div>
 
     <div :class="['overlay', { 'overlay--visible': showOverlay }]">
