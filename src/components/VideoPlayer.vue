@@ -10,7 +10,8 @@
   }>();
 
   const emit = defineEmits<{
-    (e: 'close'): void
+    (e: 'stream-died'): void,
+    (e: 'close'): void,
   }>();
 
   const ovenplayer = useTemplateRef('ovenplayer');
@@ -52,8 +53,9 @@
 
     // Remove the stream after 5s
     setTimeout(() => {
+      emit('stream-died');
       emit('close');
-    }, 5000);
+    }, 1500);
   }
 
   function stateChangedHandler(event: any) {

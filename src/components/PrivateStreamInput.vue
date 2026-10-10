@@ -11,9 +11,9 @@
   const emits = defineEmits<{
     (e: 'add', streamTag: string): void,
   }>();
-  
+
   const streamTag = ref('');
-  
+
   const addedStreams = computed(() => {
     return config.privateStreams.filter(s => !props.ignoreStreams.includes(s));
   })

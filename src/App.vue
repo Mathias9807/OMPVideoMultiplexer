@@ -8,6 +8,7 @@
   const config = useConfigStore();
 
   const streamSources = ref([]);
+  const streamsThatDied = ref([]);
 
   watch(() => config.background, (newBackground) => {
     document.body.className = newBackground;
@@ -44,11 +45,13 @@
       :source="streamSource"
       :muted="config.openMuted"
       :transport="config.tcpTransport ? 'tcp' : ''"
-      @close="() => closeStream(streamSource)" />
+      @close="() => closeStream(streamSource)"
+      @streamDied="() => streamsThatDied.push(streamSource)" />
 
     <StreamSelector
       :autoOpenNewStreams="config.autoplay"
-      v-model="streamSources" />
+      v-model="streamSources"
+      v-model:streamsThatDied="streamsThatDied" />
 
     <iframe v-if="izuna" src="https://izuna.ninja/" style="width: 500px; height: 500px" ></iframe>
   </div>

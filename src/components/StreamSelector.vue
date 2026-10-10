@@ -10,6 +10,7 @@
   }>();
 
   const modelValue = defineModel<string[]>({ required: true });
+  const streamsThatDied = defineModel<string[]>('streamsThatDied', { required: true });
 
   const prevStreams = ref<string[]>([]);
   const streams = ref<string[]>([]);
@@ -27,22 +28,31 @@
   const unselectedStreams = ref([] as string[]);
 
   function streamsUpdated() {
-    // // Filter out streams that have been removed
-    // for (const selStream of modelValue.value) {
-    //   if (!streams.value.includes(selStream)) {
-    //     modelValue.value = modelValue.value.filter((s) => s !== selStream);
-    //   }
-    // }
 
     // Add new streams if autoOpenNewStreams is enabled
+    const newStreams = streams.value.filter((s) => !prevStreams.value.includes(s));
     if (props.autoOpenNewStreams) {
-      const newStreams = streams.value.filter((s) => !prevStreams.value.includes(s));
       modelValue.value.push(...newStreams);
+    } else {
+      // Re-open a stream that closed due to an error
+
+      // Collect streams that aren't playing but are streaming and were closed by an error
+      const resurrectStrms = streams.value.filter(s =>
+        !modelValue.value.includes(s) && streamsThatDied.value.includes(s));
+
+      modelValue.value.push(...resurrectStrms);
     }
 
     unselectedStreams.value = streams.value.filter((s) => !modelValue.value.includes(s));
     prevStreams.value = streams.value;
   }
+  watch(modelValue.value, streamsUpdated);
+
+  // When a stream dies, remove its tag from the selector and let it get re-added next sync
+  watch(streamsThatDied.value, (died, wereDead) => {
+    const newlyDead = died.filter(d => !wereDead.includes(d));
+    streams.value = streams.value.filter(s => newlyDead.includes(s));
+  });
 
   watch(modelValue, () => {
     unselectedStreams.value = streams.value.filter((s) => !modelValue.value.includes(s));
