@@ -16,7 +16,7 @@
   const streams = ref<string[]>([]);
 
   const { resume } = useIntervalFn(() => {
-    fetch('https://stream.kirr.nu/streams', {
+    fetch(`https://${import.meta.env.VITE_OME_HOST}/streams`, {
       signal: AbortSignal.timeout(POLL_DELAY),
     }).then((res) => res.json())
     .then((data) => {

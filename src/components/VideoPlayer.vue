@@ -35,7 +35,7 @@
       sources: [
         {
           type: 'webrpc',
-          file: `wss://stream.kirr.nu/${pre}/${parts[parts.length - 1]}${transport}`,
+          file: `wss://${import.meta.env.VITE_OME_HOST}/${pre}/${parts[parts.length - 1]}${transport}`,
         },
       ],
     };

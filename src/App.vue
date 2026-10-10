@@ -2,8 +2,10 @@
   import VideoPlayer from './components/VideoPlayer.vue';
   import StreamSelector from './components/StreamSelector.vue';
   import Checkbox from './components/Checkbox.vue';
+  import ShareScreenButton from './components/ShareScreenButton.vue'
 
   import { ref, watch } from 'vue';
+  import { askShareScreen } from './utils/webrtc';
   import { useConfigStore } from './stores/config';
   const config = useConfigStore();
 
@@ -25,6 +27,7 @@
     (window as any).lastNKeys = nKeys.substring(nKeys.length - 5);
     if ((window as any).lastNKeys.endsWith('izuna')) izuna.value = true;
   });
+
 </script>
 
 <template>
@@ -36,6 +39,8 @@
       <option value="babushka">Babushka</option>
       <option value="architect">Architect</option>
     </select>
+
+    <ShareScreenButton />
   </div>
 
   <div class="content">
